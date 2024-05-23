@@ -1,0 +1,14 @@
+.todo {
+  width: 35%;
+  min-width: 45rem;
+  padding-bottom: 7rem;
+  margin: 0 auto;
+  background-color: #faf4e6;
+  border-radius: 1.5rem;
+  border: 2px solid #000;
+  box-shadow: 7px 7px 20px 1px #000;
+}
+.todo .pagination {
+  display: flex;
+  justify-content: center;
+}/*# sourceMappingURL=style.css.map */

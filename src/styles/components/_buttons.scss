@@ -1,0 +1,66 @@
+.btn {
+  // 버튼 사이즈
+
+  &--modify {
+    width: 3.5rem;
+  }
+
+  &--del {
+    width: 3rem;
+  }
+
+  &--sm {
+    height: 3rem;
+    padding: 0 1rem;
+    border: none;
+    border-radius: 3px;
+    vertical-align: middle;
+  }
+
+  // 버튼 컬러
+  &--bg {
+    &-primary {
+    }
+    &-success {
+    }
+    &-danger {
+    }
+  }
+}
+
+// 투두 버튼 위치 조정
+.todo__btn {
+  margin-right: 10px;
+  &:last-of-type {
+    margin-right: 0;
+  }
+}
+.todo__btn-img {
+  width: 100%;
+}
+
+// 상태 버튼
+.status-btn {
+  display: inline-block;
+  width: 3rem;
+  height: 3rem;
+  margin-right: 1rem;
+  border: 1px solid #000;
+  border-radius: 50%;
+  vertical-align: middle;
+  &:last-of-type {
+    margin-right: 0;
+  }
+  &.active {
+    opacity: 1;
+  }
+  &--not-progressed {
+    background-color: #f16170;
+  }
+  &--ongoing {
+    background-color: #f9db86;
+  }
+  &--completion {
+    background-color: #91e89b;
+  }
+}

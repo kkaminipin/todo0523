@@ -1,0 +1,14 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+.pagination li {
+  margin-right: 2rem;
+}
+.pagination li.selected a {
+  font-weight: 700;
+  color: #00c855;
+}
+.pagination a {
+  color: #000;
+}/*# sourceMappingURL=style.css.map */

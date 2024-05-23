@@ -1,0 +1,9 @@
+.aside {
+  position: absolute;
+  top: 12rem;
+  left: 0;
+  width: 20rem;
+}
+.aside + .main {
+  margin-left: 20rem;
+}/*# sourceMappingURL=style.css.map */
