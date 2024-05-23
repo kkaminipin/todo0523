@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import StatusButton from '../StatusButton';
 import './styles/style.css';
+import { useEffect } from 'react';
 
 const TodoHeader = () => {
   const [todoTitle, setTodoTitle] = useState('');
+  const [statusList, setStatusList] = useState({});
   const dispatch = useDispatch();
 
   const statusBtnSelect = document.querySelectorAll(
@@ -16,24 +18,24 @@ const TodoHeader = () => {
   });
 
   const todoItems = useSelector((state) => state.todoItems);
-  todoItems.forEach((todoItem) => {
-    switch (todoItem.status) {
-      case '미진행':
-        document
-          .querySelector('.status-btn--not-progressed')
-          .classList.add('active');
-        break;
-      case '진행중':
-        document.querySelector('.status-btn--ongoing').classList.add('active');
-        break;
-      case '완료':
-        document
-          .querySelector('.status-btn--completion')
-          .classList.add('active');
 
-        break;
-    }
-  });
+  useEffect(() => {
+    const newStatusList = {};
+    todoItems.forEach((todoItem) => {
+      switch (todoItem.status) {
+        case '미진행':
+          newStatusList['status-btn--not-progressed'] = true;
+          break;
+        case '진행중':
+          newStatusList['status-btn--ongoing'] = true;
+          break;
+        case '완료':
+          newStatusList['status-btn--completion'] = true;
+          break;
+      }
+    });
+    setStatusList(newStatusList);
+  }, [todoItems]);
 
   const onKeyEnter = (event) => {
     if (event.key === 'Enter') {
@@ -51,7 +53,9 @@ const TodoHeader = () => {
     <header className='todo__header'>
       <div className='todo__header-content'>
         <div className='todo__status-btn'>
+          {/* <TodoStatus />/ 변경하기 240523 */}
           <StatusButton
+            statusList={statusList}
             className={'status-btn--not-progressed'}
             status={'미진행'}
           />

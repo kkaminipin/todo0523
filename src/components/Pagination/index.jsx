@@ -7,8 +7,7 @@ const Pagination = () => {
   const [page, setPage] = useState(0);
 
   const handlePageClick = ({ selected }) => {
-    console.log(selected + 1);
-    setPage(selected + 1);
+    setPage(selected);
   };
   return (
     <>
@@ -18,7 +17,7 @@ const Pagination = () => {
         nextLabel='next >'
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}
-        pageCount={3}
+        pageCount={5}
         previousLabel='< previous'
         renderOnZeroPageCount={null}
         forcePage={page}

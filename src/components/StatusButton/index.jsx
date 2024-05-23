@@ -1,16 +1,22 @@
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import './styles/style.css';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
-const StatusButton = ({ className, status }) => {
+const StatusButton = ({ className, status, statusList }) => {
   const dispatch = useDispatch();
   const todoItems = useSelector((state) => state.todoItems);
-
+  // const [className, setClassName] = useState('');
   const onShowOnlyClickedStatus = (event) => {
-    event.target.classList.toggle('active');
+    // const cn = className === 'active' ? '' : 'active'; // 변경하기 240523
+    // setClassName(cn);
     statusFilterOut();
   };
 
+  useEffect(() => {
+    // className 에 active 넣어주기
+  }, [statusList]);
   const statusFilterOut = () => {
     const selectedStatus = todoItems.filter(
       (todoItem) => todoItem.status === status

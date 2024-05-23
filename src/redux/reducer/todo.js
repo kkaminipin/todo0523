@@ -4,27 +4,32 @@ const initialState = {
   todoNotProgressed: [],
   todoOngoing: [],
   todoCompletion: [],
+  todoStatus: '전체',
 };
 
 function todo(state = initialState, action) {
   // console.log('payload', action.payload);
   // console.log('state', state);
 
+  let newTodo = [];
   switch (action.type) {
     case 'todoTitle':
       return { ...state, todoTitle: action.payload };
     case 'todoCreate':
+      console.log('create called');
+      newTodo = [
+        ...state.todoItems,
+        {
+          id: Math.random(),
+          todoTitle: state.todoTitle,
+          modify: false,
+          status: '미진행',
+        },
+      ];
       return {
         ...state,
-        todoItems: [
-          ...state.todoItems,
-          {
-            id: Math.random(),
-            todoTitle: state.todoTitle,
-            modify: false,
-            status: '미진행',
-          },
-        ],
+        todoItems: newTodo,
+        todoSave: newTodo,
         todoTitle: '',
       };
     case 'todoReDraw':
@@ -33,14 +38,21 @@ function todo(state = initialState, action) {
         todoItems: [...action.payload],
       };
     case 'todoUpdate':
+      console.log('update called');
+      newTodo = state.todoSave.map((todoItem) => {
+        if (todoItem.id === action.payload.id) {
+          return action.payload;
+        }
+        return todoItem;
+      });
       return {
         ...state,
-        todoItems: state.todoItems.map((todoItem) => {
-          if (todoItem.id === action.payload.id) {
-            return action.payload;
-          }
-          return todoItem;
+        todoItems: newTodo.filter((todoItem) => {
+          const result =
+            todoItem.status === state.todoStatus || state.todoStatus === '전체';
+          return result;
         }),
+        todoSave: newTodo,
       };
     case 'todoSave':
       /*
@@ -55,11 +67,9 @@ function todo(state = initialState, action) {
       */
       return {
         ...state,
-        todoItems: state.todoItems.filter((todoItem) => {
-          if (todoItem.status === action.payload) {
-            return todoItem;
-          }
-        }),
+        todoItems: state.todoSave.filter(
+          (todoItem) => todoItem.status === action.payload
+        ),
       };
 
     /*
