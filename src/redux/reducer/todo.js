@@ -3,7 +3,7 @@ const initialState = {
   todoSave: [],
   todoStatus: '전체',
   test: [],
-  status: '',
+  status: '미진행',
 };
 
 function todo(state = initialState, action) {
@@ -13,8 +13,8 @@ function todo(state = initialState, action) {
   let newTodo = [];
   switch (action.type) {
     case 'getStatus':
-      console.log(state.status);
-      state.status = action.payload,
+      state.status = action.payload;
+      return { ...state };
 
     case 'todoTitle':
       return { ...state, todoTitle: action.payload };
@@ -26,7 +26,7 @@ function todo(state = initialState, action) {
           id: Math.random(),
           todoTitle: state.todoTitle,
           modify: false,
-          status: action.payload,
+          status: state.status,
         },
       ];
 
