@@ -10,7 +10,9 @@ const TodoHeader = () => {
   const [statusList, setStatusList] = useState({});
   const dispatch = useDispatch();
 
-  const statusBtnSelect = document.querySelectorAll('.todo__status-btn .status-btn');
+  const statusBtnSelect = document.querySelectorAll(
+    '.todo__status-btn .status-btn'
+  );
   statusBtnSelect.forEach((item) => {
     item.classList.remove('active');
   });
@@ -61,10 +63,26 @@ const TodoHeader = () => {
       <div className='todo__header-content'>
         <div className='todo__status-btn'>
           {/* <TodoStatus />/ 변경하기 240523 */}
-          <StatusButton statusList={statusList} className={'status-btn--not-progressed'} status={'미진행'} />
-          <StatusButton className={'status-btn--ongoing'} status={'진행중'} statusList={statusList} />
-          <StatusButton className={'status-btn--completion'} status={'완료'} statusList={statusList} />
-          <button type='button' className='status-btn status-btn--all' onClick={all}>
+          <StatusButton
+            statusList={statusList}
+            className={'status-btn--not-progressed'}
+            status={'미진행'}
+          />
+          <StatusButton
+            className={'status-btn--ongoing'}
+            status={'진행중'}
+            statusList={statusList}
+          />
+          <StatusButton
+            className={'status-btn--completion'}
+            status={'완료'}
+            statusList={statusList}
+          />
+          <button
+            type='button'
+            className='status-btn status-btn--all'
+            onClick={all}
+          >
             <span className='blind'>전체</span>
           </button>
         </div>

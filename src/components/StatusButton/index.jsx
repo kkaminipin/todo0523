@@ -3,18 +3,19 @@ import { useDispatch } from 'react-redux';
 import './styles/style.css';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useMemo } from 'react';
 
 const StatusButton = ({ className, status, statusList }) => {
+  const todoStatus = useSelector((state) => state.status);
   const dispatch = useDispatch();
   const [addActive, SetAddactive] = useState('');
-
   const onShowClickedStatus = () => {
-    dispatch({ type: 'getStatus', payload: status });
-
     const activeBoolean = addActive === 'active' ? '' : 'active';
+    dispatch({ type: 'setStatus', payload: status });
     SetAddactive(activeBoolean);
     // console.log('addActive : ', addActive);
-    dispatch({ type: 'todoSave', payload: status });
+    // dispatch({ type: 'todoSave', payload: status });
 
     // switch (status) {
     //   case '미진행':
@@ -31,11 +32,20 @@ const StatusButton = ({ className, status, statusList }) => {
   // console.log('addActive : ', addActive);
 
   useEffect(() => {
-    //SetAddactive('active'); // addActive 에 active 넣어주기
+    SetAddactive('active'); // addActive 에 active 넣어주기
   }, [statusList]);
 
+  const buttonClassName = useMemo(() => {
+    const isChecked = false; //todoStatus.filter((item) => item === status)?.length !== 0; 참고용 // TODO 조건 체크 기능 구현
+    return isChecked
+      ? `status-btn ${className} active`
+      : `status-btn ${className}`;
+  }, [className, todoStatus]);
   return (
-    <button className={`status-btn ${className}`} onClick={(event) => onShowClickedStatus(event)}>
+    <button
+      className={buttonClassName}
+      onClick={(event) => onShowClickedStatus(event)}
+    >
       <span className='blind'>{status}</span>
     </button>
   );
