@@ -30,11 +30,13 @@ const TodoItem = ({ todoItem, index }) => {
     dispatch({ type: 'todoReDraw', payload: newTodo });
   };
 
-  const onStatusChangeBtn = (todoItem) => {
-    let status = getNextState(todoItem.status);
-    dispatch({ type: 'todoUpdate', payload: { ...todoItem, status } });
+  // 첫번째로 실행됨
+  const todoItemStatusChangeBtn = (todoItem) => {
+    let status = getNextState(todoItem.status); // 클릭한 버튼의 다음 상태값을 담는다.
+    dispatch({ type: 'todoUpdate', payload: { ...todoItem, status } }); // 변경된 상태값의 todoItem을 redux todoUpdate로 보낸다.
   };
 
+  // 두번째로 실행됨
   const getNextState = (status) => {
     switch (status) {
       case '미진행':
@@ -48,6 +50,7 @@ const TodoItem = ({ todoItem, index }) => {
     }
   };
 
+  // 세번째로 실행됨
   const getProgressClassNames = (status) => {
     switch (status) {
       case '미진행':
@@ -65,7 +68,7 @@ const TodoItem = ({ todoItem, index }) => {
         <button
           className={`status-btn ${getProgressClassNames(todoItem.status)}`}
           onClick={() => {
-            onStatusChangeBtn(todoItem);
+            todoItemStatusChangeBtn(todoItem);
           }}
         >
           <span className='blind'>{todoItem.status}</span>
@@ -75,18 +78,8 @@ const TodoItem = ({ todoItem, index }) => {
         <TodoTitleOrModifyInput todoItem={todoItem} onModifyBtn={onModifyBtn} />
       </td>
       <td>
-        <TodoItemButton
-          className={'btn--modify'}
-          eventFunction={onModifyBtn}
-          imgName={btnModify}
-          imgAlt={'수정'}
-        />
-        <TodoItemButton
-          className={'btn--del'}
-          eventFunction={onDeleteBtn}
-          imgName={btnDelete}
-          imgAlt={'삭제'}
-        />
+        <TodoItemButton className={'btn--modify'} eventFunction={onModifyBtn} imgName={btnModify} imgAlt={'수정'} />
+        <TodoItemButton className={'btn--del'} eventFunction={onDeleteBtn} imgName={btnDelete} imgAlt={'삭제'} />
       </td>
     </tr>
   );

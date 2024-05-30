@@ -1,44 +1,41 @@
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import './styles/style.css';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
 const StatusButton = ({ className, status, statusList }) => {
   const dispatch = useDispatch();
-  const todoItems = useSelector((state) => state.todoItems);
-  // const [className, setClassName] = useState('');
-  const onShowOnlyClickedStatus = (event) => {
-    // const cn = className === 'active' ? '' : 'active'; // 변경하기 240523
-    // setClassName(cn);
-    statusFilterOut();
-  };
+  const [addActive, SetAddactive] = useState('');
 
-  useEffect(() => {
-    // className 에 active 넣어주기
-  }, [statusList]);
-  const statusFilterOut = () => {
-    const selectedStatus = todoItems.filter(
-      (todoItem) => todoItem.status === status
-    );
+  const onShowClickedStatus = () => {
+    dispatch({ type: 'getStatus', payload: status });
 
+    const activeBoolean = addActive === 'active' ? '' : 'active';
+    SetAddactive(activeBoolean);
+    // console.log('addActive : ', addActive);
     dispatch({ type: 'todoSave', payload: status });
 
     // switch (status) {
     //   case '미진행':
-    //     return dispatch({ type: 'todoNotProgressed', payload: selectedStatus });
+    //     console.log('미진행');
+    //     break;
     //   case '진행중':
-    //     return dispatch({ type: 'todoOngoing', payload: selectedStatus });
+    //     console.log('진행중');
+    //     break;
     //   case '완료':
-    //     return dispatch({ type: 'todoCompletion', payload: selectedStatus });
+    //     console.log('완료');
+    //     break;
     // }
   };
+  // console.log('addActive : ', addActive);
+
+  useEffect(() => {
+    //SetAddactive('active'); // addActive 에 active 넣어주기
+  }, [statusList]);
 
   return (
-    <button
-      className={`status-btn ${className}`}
-      onClick={(event) => onShowOnlyClickedStatus(event)}
-    >
+    <button className={`status-btn ${className}`} onClick={(event) => onShowClickedStatus(event)}>
       <span className='blind'>{status}</span>
     </button>
   );
@@ -47,82 +44,7 @@ const StatusButton = ({ className, status, statusList }) => {
 StatusButton.propTypes = {
   className: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
+  statusList: PropTypes.object.isRequired,
 };
 
 export default StatusButton;
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-// import PropTypes from 'prop-types';
-// import { useDispatch, useSelector } from 'react-redux';
-// import './styles/style.css';
-
-// const StatusButton = ({ className, status }) => {
-//   const dispatch = useDispatch();
-//   const todoItems = useSelector((state) => state.todoItems);
-
-//   const notProgressed = todoItems.filter(
-//     (todoItem) => todoItem.status === '미진행'
-//   );
-//   const ongoing = todoItems.filter((todoItem) => todoItem.status === '진행중');
-//   const completion = todoItems.filter((todoItem) => todoItem.status === '완료');
-
-//   const onShowOnlyClickedStatus = (event) => {
-//     const status = event.target.children[0].innerHTML;
-//     event.target.classList.toggle('active');
-
-//     dispatch({ type: 'todoNotProgressed', payload: notProgressed });
-//     dispatch({ type: 'todoOngoing', payload: ongoing });
-//     dispatch({ type: 'todoCompletion', payload: completion });
-
-//     switch (status) {
-//       case '미진행':
-//         dispatch({ type: 'todoReDraw', payload: notProgressed });
-//         break;
-//       case '진행중':
-//         dispatch({ type: 'todoReDraw', payload: ongoing });
-//         break;
-//       case '완료':
-//         dispatch({ type: 'todoReDraw', payload: completion });
-//         break;
-//     }
-//   };
-
-//   const onShowEveryStatus = () => {
-//     console.log(test);
-//   };
-
-//   return (
-//     <button
-//       className={`status-btn ${className}`}
-//       onClick={(event) => onShowOnlyClickedStatus(event)}
-//     >
-//       <span className='blind'>{status}</span>
-//     </button>
-//   );
-// };
-
-// StatusButton.propTypes = {
-//   className: PropTypes.string.isRequired,
-//   status: PropTypes.string.isRequired,
-// };
-
-// export default StatusButton;
